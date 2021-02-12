@@ -39,7 +39,12 @@ let  money,
 			let cashIncome;
 
 			if(confirm ('есть ли у вас дополнительный источник дохода?')){
+
 				let itemIncome = prompt('Какой у вас заработок?' , "Таксую");
+				do{
+					itemIncome = prompt('Введите обязательную статью расходов?');
+				} while (isString(itemIncome));//пока пользователь не введёт число
+
 				do{
 				 cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?');
 					} while (!isNumbers(cashIncome));//пока пользователь не введёт число
@@ -49,12 +54,14 @@ let  money,
 			
 			
 			let addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую");
-			
-			appData.addExpenses  =   addExpenses.toLowerCase().split(',');
-			for (let i = 0; i < appData.addExpenses.length; i++) {
-					appData.addExpenses[i] = appData.addExpenses[i].charAt(0).toUpperCase().split('') + appData.addExpenses[i].substring(1);     
-			}
-		
+			appData.addExpenses = addExpenses.toLowerCase().split(', ');
+			appData.addExpenses  =   appData.addExpenses.map( function (word) {
+				word = word.charAt(0).toUpperCase() + word.substring(1);
+				return word;
+			});
+
+			console.log(appData.addExpenses);
+
 
 			appData.deposit = confirm("Есть ли у вас депозит в банке?"); //любое булево значение,
 
